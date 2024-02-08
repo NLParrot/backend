@@ -1,0 +1,202 @@
+INFO:werkzeug: * Detected change in '/home/puurun/projects/nlp-project/backend/api_server.py', reloading
+INFO:werkzeug: * Detected change in '/home/puurun/projects/nlp-project/backend/api_server.py', reloading
+INFO:werkzeug: * Detected change in '/home/puurun/projects/nlp-project/backend/api_server.py', reloading
+INFO:werkzeug:127.0.0.1 - - [07/Feb/2024 17:29:58] "OPTIONS /api/chat/message HTTP/1.1" 200 -
+INFO:root:{'intent1': '', 'slot': '', 'user_text': '소정민 교수님 !!'}
+INFO:root:intent1=강의
+INFO:werkzeug:127.0.0.1 - - [07/Feb/2024 17:29:58] "POST /api/chat/message HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [07/Feb/2024 17:31:43] "OPTIONS /api/chat/message HTTP/1.1" 200 -
+INFO:root:{'intent1': '', 'slot': '', 'user_text': 'ㅁㄴㅇㅁㄴㅇ'}
+INFO:root:intent1=지도
+INFO:werkzeug:127.0.0.1 - - [07/Feb/2024 17:31:43] "POST /api/chat/message HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [07/Feb/2024 17:32:09] "OPTIONS /api/chat/message HTTP/1.1" 200 -
+INFO:root:{'intent1': '', 'slot': '', 'user_text': 'ㅁㄴㅇㅁㄴㅇ'}
+INFO:root:intent1=지도
+INFO:werkzeug:127.0.0.1 - - [07/Feb/2024 17:32:09] "POST /api/chat/message HTTP/1.1" 200 -
+INFO:root:{'intent1': '지도', 'response_text': 'intent1 is 지도', 'user_text': 'ㅂㅈㄷㅂㅈㄷ'}
+INFO:werkzeug:127.0.0.1 - - [07/Feb/2024 17:32:12] "POST /api/chat/message HTTP/1.1" 200 -
+INFO:root:{'intent1': '지도', 'response_text': 'intent1 is 지도', 'user_text': 'ㅋㅌㅊㅋㅌㅊ'}
+INFO:werkzeug:127.0.0.1 - - [07/Feb/2024 17:32:14] "POST /api/chat/message HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [07/Feb/2024 17:32:37] "OPTIONS /api/chat/message HTTP/1.1" 200 -
+INFO:root:{'intent1': '', 'slot': '', 'user_text': '이거 어디냐'}
+INFO:root:intent1=지도
+INFO:werkzeug:127.0.0.1 - - [07/Feb/2024 17:32:37] "POST /api/chat/message HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [07/Feb/2024 17:32:46] "OPTIONS /api/chat/message HTTP/1.1" 200 -
+INFO:root:{'intent1': '', 'slot': '', 'user_text': '마관에서 파관'}
+INFO:root:intent1=지도
+INFO:werkzeug:127.0.0.1 - - [07/Feb/2024 17:32:46] "POST /api/chat/message HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/home/puurun/projects/nlp-project/backend/api_server.py', reloading
+INFO:werkzeug: * Detected change in '/home/puurun/projects/nlp-project/backend/api_server.py', reloading
+INFO:werkzeug: * Detected change in '/home/puurun/projects/nlp-project/backend/api_server.py', reloading
+INFO:werkzeug: * Detected change in '/home/puurun/projects/nlp-project/backend/api_server.py', reloading
+INFO:werkzeug: * Detected change in '/home/puurun/projects/nlp-project/backend/api_server.py', reloading
+INFO:werkzeug: * Detected change in '/home/puurun/projects/nlp-project/backend/api_server.py', reloading
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in '/home/puurun/projects/nlp-project/backend/api_server.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in '/home/puurun/projects/nlp-project/backend/api_server.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in '/home/puurun/projects/nlp-project/backend/api_server.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in '/home/puurun/projects/nlp-project/backend/api_server.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in '/home/puurun/projects/nlp-project/backend/api_server.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in '/home/puurun/projects/nlp-project/backend/api_server.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in '/home/puurun/projects/nlp-project/backend/api_server.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in '/home/puurun/projects/nlp-project/backend/api_server.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in '/home/puurun/projects/nlp-project/backend/api_server.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in '/home/puurun/projects/nlp-project/backend/api_server.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in '/home/puurun/projects/nlp-project/backend/api_server.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in '/home/puurun/projects/nlp-project/backend/api_server.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in '/home/puurun/projects/nlp-project/backend/api_server.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in '/home/puurun/projects/nlp-project/backend/api_server.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in '/home/puurun/projects/nlp-project/backend/api_server.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in '/home/puurun/projects/nlp-project/backend/api_server.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in '/home/puurun/projects/nlp-project/backend/api_server.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in '/home/puurun/projects/nlp-project/backend/api_server.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in '/home/puurun/projects/nlp-project/backend/api_server.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in '/home/puurun/projects/nlp-project/backend/api_server.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in '/home/puurun/projects/nlp-project/backend/api_server.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in '/home/puurun/projects/nlp-project/backend/api_server.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in '/home/puurun/projects/nlp-project/backend/api_server.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in '/home/puurun/projects/nlp-project/backend/api_server.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in '/home/puurun/projects/nlp-project/backend/api_server.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in '/home/puurun/projects/nlp-project/backend/api_server.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in '/home/puurun/projects/nlp-project/backend/api_server.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in '/home/puurun/projects/nlp-project/backend/api_server.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in '/home/puurun/projects/nlp-project/backend/api_server.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in '/home/puurun/projects/nlp-project/backend/api_server.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in '/home/puurun/projects/nlp-project/backend/api_server.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in '/home/puurun/projects/nlp-project/backend/api_server.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug:127.0.0.1 - - [08/Feb/2024 18:43:31] "OPTIONS /api/chat/message HTTP/1.1" 200 -
+INFO:root:{'intent1': '', 'intent2': '', 'slot': '', 'user_text': '야 알렉스'}
+INFO:root:intent1=지도
+INFO:werkzeug:127.0.0.1 - - [08/Feb/2024 18:43:32] "POST /api/chat/message HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [08/Feb/2024 18:48:11] "OPTIONS /api/chat/message HTTP/1.1" 200 -
+INFO:root:{'intent1': '', 'intent2': '', 'slot': '', 'user_text': '야 알렉스'}
+INFO:root:intent1=지도
+INFO:werkzeug:127.0.0.1 - - [08/Feb/2024 18:48:11] "POST /api/chat/message HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [08/Feb/2024 18:50:06] "OPTIONS /api/chat/message HTTP/1.1" 200 -
+INFO:root:{'intent1': '', 'intent2': '', 'slot': '', 'user_text': '본관에서 j관'}
+INFO:root:intent1=지도
+INFO:werkzeug:127.0.0.1 - - [08/Feb/2024 18:50:06] "POST /api/chat/message HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [08/Feb/2024 18:50:28] "OPTIONS /api/chat/message HTTP/1.1" 200 -
+INFO:root:{'intent1': '', 'intent2': '', 'slot': '', 'user_text': '본관에서 j관'}
+INFO:root:intent1=지도
+INFO:werkzeug:127.0.0.1 - - [08/Feb/2024 18:50:28] "POST /api/chat/message HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [08/Feb/2024 18:51:21] "OPTIONS /api/chat/message HTTP/1.1" 200 -
+INFO:root:{'intent1': '', 'intent2': '', 'slot': '', 'user_text': '다산에서 케이'}
+INFO:root:intent1=지도
+INFO:werkzeug:127.0.0.1 - - [08/Feb/2024 18:51:21] "POST /api/chat/message HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [08/Feb/2024 20:08:40] "OPTIONS /api/chat/message HTTP/1.1" 200 -
+INFO:root:{'intent1': '', 'intent2': '', 'slot': '', 'user_text': '다산관에서 제이관 까지 가는법을 알려줘'}
+INFO:root:intent1=지도
+INFO:werkzeug:127.0.0.1 - - [08/Feb/2024 20:08:40] "POST /api/chat/message HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [08/Feb/2024 20:10:13] "OPTIONS /api/chat/message HTTP/1.1" 200 -
+INFO:root:{'intent1': '지도', 'intent2': '길찾기', 'response_text': 'intent1=지도 intent2=길찾기 slot=', 'slot': '', 'user_text': '평일 로욜라 몇시부터 몇시야'}
+INFO:root:intent1=지도
+INFO:werkzeug:127.0.0.1 - - [08/Feb/2024 20:10:13] "POST /api/chat/message HTTP/1.1" 200 -
