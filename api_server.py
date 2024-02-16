@@ -1,3 +1,4 @@
+#type:ignore
 from flask import Flask, request
 from flask_cors import CORS
 
@@ -5,21 +6,24 @@ from transformers import TextClassificationPipeline
 from transformers import AutoModelForSequenceClassification, AutoModelForSeq2SeqLM
 from transformers import AutoTokenizer
 
-import pandas as pd
-import numpy as np
 import logging
 import torch
 import re
 import sys
+import weaviate
+import weaviate.classes as wvc
+import weaviate.classes.config as wvcc
+from sentence_transformers import SentenceTransformer
 
 
 # Logging
 root_logger = logging.getLogger()
 root_logger.setLevel(logging.INFO)
-logging.basicConfig(filename='log.log', encoding='utf-8', level=logging.INFO)
+logging.basicConfig(filename="log.log", encoding="utf-8", level=logging.INFO)
 handler = logging.StreamHandler(sys.stdout)
 handler.setLevel(logging.INFO)
 root_logger.addHandler(handler)
+
 
 class Text2TextWithTokens:
     def __init__(self, model, tokenizer, gen_args={}, device=None):
@@ -27,16 +31,19 @@ class Text2TextWithTokens:
         self.tokenizer = tokenizer
         self.gen_args = gen_args
         if device == None:
-            device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+            device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.device = device
+
     def __call__(self, data):
-        data = self.tokenizer(data, return_tensors='pt').to(self.device)
+        data = self.tokenizer(data, return_tensors="pt").to(self.device)
         model = self.model.to(self.device)
-        output = model.generate(data['input_ids'], *self.gen_args)[0]
+        output = model.generate(data["input_ids"], *self.gen_args)[0]
         return self.tokenizer.decode(output.tolist(), skip_special_tokens=False)
+
 
 # Initialize some global variables
 # Models that are used in pytorch
+embedding_model = SentenceTransformer('jhgan/ko-sroberta-multitask')
 
 koelectra_tokenizer = AutoTokenizer.from_pretrained(
     "./models/intent1_model_1", local_fiels_only=True
@@ -107,11 +114,15 @@ state_location_inference = Text2TextWithTokens(state_location_model, state_token
 state_pathfind_inference = Text2TextWithTokens(state_pathfind_model, state_tokenizer)
 state_service_inference = Text2TextWithTokens(state_service_model, state_tokenizer)
 
-app = Flask(__name__)
-CORS(app, resources={
-    r"/api/*": {"origins": "http://127.0.0.1:8000"}
-})
+# Weaviate Database
+wc = weaviate.connect_to_local(port=8080, grpc_port=50051)
+course_name = wc.collections.get("CourseName")
+professor_name = wc.collections.get("ProfessorName")
+course = wc.collections.get("Course")
+course_evaluation = wc.collections.get("CourseEvaluation")
 
+app = Flask(__name__)
+CORS(app, resources={r"/api/*": {"origins": "http://127.0.0.1:8000"}})
 
 
 @app.route("/api/chat/message", methods=["POST"])
@@ -136,9 +147,9 @@ def get_state():
         "intent2": intent2,
         "slot": slot,
         "debug_text": f"intent1={intent1} intent2={intent2} slot={slot}",
-        "response_text": response_text
-        
+        "response_text": response_text,
     }
+
 
 def get_response(intent1, intent2, slot):
     if intent2 == "강의평가 요약":
@@ -160,17 +171,48 @@ def get_response(intent1, intent2, slot):
     elif intent2 == "재수강":
         pass
 
-
     return "no response made yet"
 
+
 def get_response_course_evaluation(slot):
-    pass
+    course_vector = embedding_model.encode(slot["course"]).tolist() #pyright:ignore
+    course = course_name.query.near_vector(
+        near_vector=course_vector,
+        limit=3,
+    ).objects[0].properties["course_name"]
+
+    professor_vector = embedding_model.encode(slot["professor"]).tolist() #pyright:ignore
+    professor = professor_name.query.near_vector(
+        near_vector=professor_vector,
+        limit=3,
+    ).objects[0].properties["professor_name"]
+    
+    if slot.get("course_keyword"):
+        keyword_vector = embedding_model.encode(slot["course_keyword"]).tolist() #pyright:ignore
+    else:
+        keyword_vector = embedding_model.encode("학점").tolist() #pyright:ignore
+
+    evaluations = course_evaluation.query.near_vector(
+        near_vector=keyword_vector,
+        limit=3,
+        filters=wvc.query.Filter.by_property("course_name").equal(course) &
+                wvc.query.Filter.by_property("professor_name").equal(professor)
+    ).objects[0].properties["professor_name"]
+
+    
+    response =  f"{professor} 교수님의 {course} 강의에 대한 강의 평가를 찾으시는군요! 몇가지를 보여드릴게요\n"
+    response += f"1: {evaluations}"
+
+    return response
+
 
 def get_response_course_info(slot):
     pass
 
+
 def get_response_location(slot):
     pass
+
 
 def get_response_pathfind(slot):
     pass
@@ -182,6 +224,7 @@ def get_intent1(slot, user_text):
     logging.info(f"intent1={intent1}")
 
     return intent1
+
 
 def get_intent2(slot, user_text, intent1):
     if intent1 == "강의":
@@ -198,21 +241,24 @@ def get_intent2(slot, user_text, intent1):
 
 
 def get_intent2_course(user_text):
-    return intent2_course_classifier(user_text)[0]["label"] # pyright: ignore
-    
+    return intent2_course_classifier(user_text)[0]["label"]  # pyright: ignore
+
+
 def get_intent2_map(user_text):
-    return intent2_map_classifier(user_text)[0]["label"] # pyright: ignore
+    return intent2_map_classifier(user_text)[0]["label"]  # pyright: ignore
+
 
 def get_intent2_school_rule(user_text):
-    return intent2_school_rule_classifier(user_text)[0]["label"] # pyright: ignore
+    return intent2_school_rule_classifier(user_text)[0]["label"]  # pyright: ignore
+
 
 def get_intent2_school_service(user_text):
-    return intent2_service_classifier(user_text)[0]["label"] # pyright: ignore
+    return intent2_service_classifier(user_text)[0]["label"]  # pyright: ignore
 
 
 # Not yet implemented
 def get_intent2_school_club(user_text):
-    return intent2_course_classifier(user_text)[0]["label"] # pyright: ignore
+    return intent2_course_classifier(user_text)[0]["label"]  # pyright: ignore
 
 
 def get_slot(intent1, intent2, user_text):
@@ -226,49 +272,46 @@ def get_slot(intent1, intent2, user_text):
     elif intent1 == "학칙" or intent1 == "학교관련서비스":
         return get_slot_service(user_text)
 
+
 def get_slot_course(user_text):
     try:
         inf = state_course_inference(user_text)
         logging.info(inf)
-        output = re.sub(r'\[BOS\]', '', inf)
-        output = re.sub(r'\[EOS\]', '', output)
-        output = re.split(r'\[SEP\]', output)
+        output = re.sub(r"\[BOS\]", "", inf)
+        output = re.sub(r"\[EOS\]", "", output)
+        output = re.split(r"\[SEP\]", output)
 
         return {
-            'course_keyword': output[1],
-            'course': output[2],
-            'professor': output[3]
+            "course_keyword": output[1],
+            "course": output[2],
+            "professor": output[3],
         }
     except Exception as e:
         logging.error(e)
         return {}
+
 
 def get_slot_location(user_text):
     try:
         inf = state_location_inference(user_text)
         logging.info(inf)
-        output = re.sub(r'\[BOS\]', '', inf)
-        output = re.sub(r'\[EOS\]', '', output)
-        output = re.split(r'\[SEP\]', output)
-        return {
-            'location': output[1]
-        }
+        output = re.sub(r"\[BOS\]", "", inf)
+        output = re.sub(r"\[EOS\]", "", output)
+        output = re.split(r"\[SEP\]", output)
+        return {"location": output[1]}
     except Exception as e:
         logging.error(e)
         return {}
-    
+
 
 def get_slot_pathfind(user_text):
     try:
         inf = state_pathfind_inference(user_text)
         logging.info(inf)
-        output = re.sub(r'\[BOS\]', '', inf)
-        output = re.sub(r'\[EOS\]', '', output)
-        output = re.split(r'\[SEP\]', output)
-        return {
-            'location_from': output[1],
-            'location_to': output[2]
-        }
+        output = re.sub(r"\[BOS\]", "", inf)
+        output = re.sub(r"\[EOS\]", "", output)
+        output = re.split(r"\[SEP\]", output)
+        return {"location_from": output[1], "location_to": output[2]}
     except Exception as e:
         logging.error(e)
         return {}
@@ -278,15 +321,15 @@ def get_slot_service(user_text):
     try:
         inf = state_service_inference(user_text)
         logging.info(inf)
-        output = re.sub(r'\[BOS\]', '', inf)
-        output = re.sub(r'\[EOS\]', '', output)
-        output = re.split(r'\[SEP\]', output)
-        return {
-            'keyword': output[1]
-        }
+        output = re.sub(r"\[BOS\]", "", inf)
+        output = re.sub(r"\[EOS\]", "", output)
+        output = re.split(r"\[SEP\]", output)
+        return {"keyword": output[1]}
     except Exception as e:
         logging.error(e)
         return {}
 
+
 if __name__ == "__main__":
     app.run(port=5000)
+    wc.close()
