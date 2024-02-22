@@ -3,14 +3,36 @@ import torch
 import logging
 import re
 from intent_models import Intent1, Intent2
-from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
+from transformers import AutoModelForSeq2SeqLM, AutoModelForTokenClassification, AutoTokenizer
+from transformers import TokenClassificationPipeline
 
+logging.basicConfig(level=logging.DEBUG)
 
 class StateModels:
     @abstractmethod
-    def get_slot(self, intent1, intent2, user_text) -> dict:
+    def get_slot(self, user_text, intent1, intent2) -> dict:
         ...
 
+class NERState(StateModels):
+    def __init__(self, path):
+        tokenizer = AutoTokenizer.from_pretrained(
+            path, local_files_only=True
+        )
+        model = AutoModelForTokenClassification.from_pretrained(
+            path, local_files_only=True
+        )
+        self.classifier = TokenClassificationPipeline(
+            model=model, tokenizer=tokenizer, aggregation_strategy='first'
+        )
+
+    # underscored variables are not used in this State Model
+    def __call__(self, user_text, _intent1, _intent2) -> dict:
+        slot = {}
+        classified = self.classifier(user_text)
+        for group in classified:
+            slot[group['entity_group']] = group['word']
+        logging.debug(f"(state)slot={slot}")
+        return slot
 
 class Seq2SeqState(StateModels):
     def __init__(

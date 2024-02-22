@@ -23,13 +23,7 @@ intent2 = Intent2(
     rule_path="../models/intent2_school_rule_model_1",
 )
 response = ChatResponse()
-state = Seq2SeqState(
-    tokenizer_path="../models/state_course_1",
-    course_path="../models/state_course_1",
-    location_path="../models/state_location_1",
-    pathfind_path="../models/state_pathfind_1",
-    service_path="../models/state_service_1",
-)
+state = NERState("../models/ner_1")
 
 
 # Logging

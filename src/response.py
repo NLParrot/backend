@@ -76,7 +76,7 @@ class ChatResponse:
             res = self.course.loc[self.course['과목명'] == course]
             response = f"{professor} 교수님이 여시는  수업에 대한 정보를 보여드리겠습니다!\n"
 
-        res.apply(lambda x: response += f"{res['과목명']}({res['과목번호']}, {res['교수진']})\n")
+        #res.apply(lambda x: response += f"{res['과목명']}({res['과목번호']}, {res['교수진']})\n", axis=1)
 
         for r in res.iterrows():
             response += f"{r['과목명']}({r['과목번호']}) ({r['교수진']})\n"
