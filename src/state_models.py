@@ -3,7 +3,6 @@ import torch
 import logging
 import re
 from intent_models import Intent1, Intent2
-from sentence_transformers import SentenceTransformer
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
 
 

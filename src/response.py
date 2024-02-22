@@ -1,5 +1,7 @@
+# type:ignore
 import json
 import logging
+import pandas as pd
 
 from chat_db import ChatDB
 from intent_models import Intent2
@@ -12,6 +14,9 @@ class ChatResponse:
     def __init__(self):
         with open("../data/address_data.json") as f:
             address_location_json = json.load(f)
+        
+        self.course = pd.read_csv("../data/course.csv") 
+        
         self.address_location_dict = {x["부서명"]: x for x in address_location_json}
         self.map = MapDB()
 
@@ -32,8 +37,8 @@ class ChatResponse:
     def get_response_course_evaluation(self, slot):
         client = ChatDB()
 
-        course = client.query_course(slot["course"])
-        professor = client.query_professor(slot["professor"])
+        course = client.query_course(slot.get("course"))
+        professor = client.query_professor(slot.get("professor"))
 
         if slot.get("course_keyword"):
             evaluations = client.query_evaluations(slot.get("course_keyword"))
@@ -48,7 +53,38 @@ class ChatResponse:
 
     # Where to get Data?
     def get_response_course_info(self, slot):
-        pass
+        client = ChatDB()
+        course = client.query_course(slot.get('course'))
+        professor = client.query_professor(slot.get('professor'))
+        
+
+        if course == None and professor == None:
+            return "교수님과 수업 이름을 제대로 인식하지 못했습니다. 다시 말해주세요!"
+
+        # query about course + professor
+        elif course and professor:
+            res = [self.course.loc[self.course['교수진'] == professor & self.course['과목명'] == course]]
+            response = f"{professor} 교수님의 {course} 수업에 대한 정보를 보여드리겠습니다!\n"
+
+        # query all about course
+        elif course:
+            res = self.course.loc[self.course['교수진'] == professor]
+            response = f"{course} 수업에 대한 정보를 보여드리겠습니다!\n"
+        
+        # query all about professor
+        else:
+            res = self.course.loc[self.course['과목명'] == course]
+            response = f"{professor} 교수님이 여시는  수업에 대한 정보를 보여드리겠습니다!\n"
+
+        res.apply(lambda x: response += f"{res['과목명']}({res['과목번호']}, {res['교수진']})\n")
+
+        for r in res.iterrows():
+            response += f"{r['과목명']}({r['과목번호']}) ({r['교수진']})\n"
+            response += f"학점: {r['학점']}"
+            response += f"수업시간: {r['수업시간/강의실']}\n"
+            response += f"권장학년: {r['권장학년']}"
+
+        return response
 
     # Need map information
     def get_response_location(self, slot):
@@ -79,7 +115,7 @@ class ChatResponse:
         slot["path"] = path
         slot["display_path_map"] = True
 
-        response = f"{from_loc_name}에서 {to_loc_name}까지 가는 길을 알려 드리겠습니다!"
+        response = f"{from_loc_name}에서 {to_loc_name}까지 가는 길을 알려 드리겠습니다!\n"
         return response
 
     def get_response_contacts(self, slot):

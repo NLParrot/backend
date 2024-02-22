@@ -57,7 +57,7 @@ class MapDB:
             for neighbor in self.graph.successors(current_node):
                 # Calculate the tentative g score for the neighbor
                 edge_data = self.graph.get_edge_data(current_node, neighbor)
-                for key, data in edge_data.items():
+                for _, data in edge_data.items():
                     tentative_g = g_score[current_node] + data["length"]
 
                     # If this path to the neighbor is better than any previous one, update the records

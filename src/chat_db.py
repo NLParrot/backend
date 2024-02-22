@@ -22,6 +22,9 @@ class ChatDB:
         self.connection.close()
 
     def query_course(self, course_query):
+        if course_query == None:
+            return None
+
         course = self.connection.collections.get("CourseName")
 
         course_vector = self.embedding_model.encode(course_query).tolist()
@@ -37,6 +40,9 @@ class ChatDB:
         return course_name
 
     def query_professor(self, professor_query):
+        if professor_query == None:
+            return None
+
         professor = self.connection.collections.get("ProfessorName")
 
         professor_vector = self.embedding_model.encode(professor_query).tolist()
@@ -52,6 +58,9 @@ class ChatDB:
         return professor_name
 
     def query_evaluations(self, keyword_query):
+        if keyword_query == None:
+            return None
+
         course_evaluation = self.connection.collections.get("CourseEvaluation")
 
         keyword_vector = self.embedding_model.encode(keyword_query).tolist()
