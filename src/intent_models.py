@@ -29,7 +29,6 @@ class Intent1:
     def __call__(self, user_text):
         intent1_s = self.classifier(user_text)[0]["label"]  # pyright: ignore
         intent1 = self._stoi1(intent1_s)
-        logging.debug(f"user_text={user_text}\nintent1={intent1}")
 
         return intent1
 

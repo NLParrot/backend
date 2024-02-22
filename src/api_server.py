@@ -47,6 +47,8 @@ def chat():
 
     cur_intent1 = intent1(user_text)
     cur_intent2 = intent2(user_text, cur_intent1)
+    logging.debug(f"intent1={cur_intent1}")
+    logging.debug(f"intent2={cur_intent2}")
     add_slot = state(user_text, cur_intent1, cur_intent2)
     cur_slot = cur_slot | add_slot
 

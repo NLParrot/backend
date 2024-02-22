@@ -1,5 +1,6 @@
 # type:ignore
 import weaviate
+import weaviate.classes as wvc
 from sentence_transformers import SentenceTransformer
 
 
@@ -57,7 +58,7 @@ class ChatDB:
 
         return professor_name
 
-    def query_evaluations(self, keyword_query):
+    def query_evaluations(self, course, professor, keyword_query):
         if keyword_query == None:
             return None
 
