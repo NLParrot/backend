@@ -29,14 +29,16 @@ class ChatDB:
         course = self.connection.collections.get("CourseName")
 
         course_vector = self.embedding_model.encode(course_query).tolist()
-        course_name = (
-            course.query.near_vector(
-                near_vector=course_vector,
-                limit=1,
-            )
-            .objects[0]
-            .properties["course_name"]
-        )
+        course_name = course.query.hybrid(
+            query=course_query,
+            vector=course_vector,
+            limit=1,
+        ).objects
+
+        if len(course_name) == 0:
+            return None
+
+        course_name = course_name[0].properties["course_name"]
 
         return course_name
 
@@ -47,14 +49,16 @@ class ChatDB:
         professor = self.connection.collections.get("ProfessorName")
 
         professor_vector = self.embedding_model.encode(professor_query).tolist()
-        professor_name = (
-            professor.query.near_vector(
-                near_vector=professor_vector,
-                limit=1,
-            )
-            .objects[0]
-            .properties["professor_name"]
-        )
+        professor_name = professor.query.hybrid(
+            query=professor_query,
+            vector=professor_vector,
+            limit=1,
+        ).objects
+
+        if len(professor_name) == 0:
+            return None
+
+        professor_name = professor_name[0].properties["professor_name"]
 
         return professor_name
 
@@ -65,41 +69,63 @@ class ChatDB:
         course_evaluation = self.connection.collections.get("CourseEvaluation")
 
         keyword_vector = self.embedding_model.encode(keyword_query).tolist()
-        evaluations = (
-            course_evaluation.query.near_vector(
-                near_vector=keyword_vector,
-                limit=3,
-                filters=wvc.query.Filter.by_property("course_name").equal(course)
-                & wvc.query.Filter.by_property("professor_name").equal(professor),
-            )
-            .objects[0]
-            .properties["evaluations"]
-        )
+        evaluations = course_evaluation.query.hybrid(
+            query=keyword_query,
+            vector=keyword_vector,
+            limit=3,
+            filters=wvc.query.Filter.by_property("course_name").equal(course)
+            & wvc.query.Filter.by_property("professor_name").equal(professor),
+        ).objects
+
+        if len(evaluations) == 0:
+            return None
+
+        evaluations = [x.properties["evaluations"] for x in evaluations]
 
         return evaluations
 
     def query_department_name(self, keyword_query):
+        if keyword_query == None:
+            return None
+
         address_location = self.connection.collections.get("AddressLocation")
 
         keyword_vector = self.embedding_model.encode(keyword_query).tolist()
-        department_name = (
-            address_location.query.near_vector(near_vector=keyword_vector, limit=3)
-            .objects[0]
-            .properties["department_name"]
-        )
+        department_name = address_location.query.hybrid(
+            query=keyword_query, vector=keyword_vector, limit=1
+        ).objects
+
+        if len(department_name) == 0:
+            return None
+
+        department_name = department_name[0].properties["department_name"]
 
         return department_name
 
     def query_location_name(self, location_query):
+        if location_query == None:
+            return None, None
+
         buildings = self.connection.collections.get("Buildings")
 
         near_vector = self.embedding_model.encode(location_query).tolist()
-        response = buildings.query.near_vector(
-            near_vector=near_vector,
+        response = buildings.query.hybrid(
+            query=location_query,
+            vector=near_vector,
             limit=1,
-        ).objects[0]
+        ).objects
+
+        if len(response) == 0:
+            return None
+
+        response = response[0]
 
         building_name = response.properties["primary_building_name"]
         coordinates = dict(response.properties["coordinates"])
 
         return building_name, coordinates
+
+
+if __name__ == "__main__":
+    c = ChatDB()
+    print(c.query_professor("소정민"))

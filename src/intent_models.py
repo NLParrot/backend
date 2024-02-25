@@ -37,12 +37,12 @@ class Intent1:
             return Intent1.COURSE
         elif s == "지도":
             return Intent1.MAP
-        elif s == "학교관련서비스":
+        elif s == "학교괸련서비스":
             return Intent1.SERVICE
         elif s == "학칙":
             return Intent1.RULE
         else:
-            raise ValueError("Intent1 not Valid")
+            raise ValueError(f"Intent1 not Valid: {s}")
 
 
 class Intent2:
@@ -51,6 +51,8 @@ class Intent2:
     BUILDING_LOCATION = "건물 위치"
     PATHFIND = "길찾기"
     CONTACTS = "연락처"
+    FA_INFORMATION = "FA제도"
+    RETAKE_INFORMATION = "재수강"
 
     def __init__(self, tokenizer_path, course_path, map_path, service_path, rule_path):
         koelectra_tokenizer = AutoTokenizer.from_pretrained(

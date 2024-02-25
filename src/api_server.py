@@ -40,27 +40,31 @@ def chat():
     request_json = request.get_json()
     logging.debug(request_json)
 
-    user_text = request_json["user_text"]
-    cur_slot = request_json.get("slot", {})
+    user_text = request_json.get("user_text", "")
     cur_intent1 = request_json.get("intent1")
     cur_intent2 = request_json.get("intent2")
+    cur_slot = request_json
 
-    cur_intent1 = intent1(user_text)
-    cur_intent2 = intent2(user_text, cur_intent1)
-    logging.debug(f"intent1={cur_intent1}")
-    logging.debug(f"intent2={cur_intent2}")
-    add_slot = state(user_text, cur_intent1, cur_intent2)
-    cur_slot = cur_slot | add_slot
+    if cur_slot["status"] != "need_info":
+        cur_intent1 = intent1(user_text)
+        cur_intent2 = intent2(user_text, cur_intent1)
+        logging.debug(f"intent1={cur_intent1}")
+        logging.debug(f"intent2={cur_intent2}")
+        add_slot = state(user_text, cur_intent1, cur_intent2)
+        cur_slot = cur_slot | add_slot
+    else:
+        cur_slot[cur_slot["info_key"]] = user_text
+        cur_slot["status"] = "normal"
 
     response_text = response(cur_intent2, cur_slot)
 
-    return {
-        "intent1": cur_intent1,
-        "intent2": cur_intent2,
-        "slot": cur_slot,
-        "debug_text": f"intent1={cur_intent1} intent2={cur_intent2} slot={cur_slot}",
-        "response_text": response_text,
-    }
+    cur_slot["intent1"] = cur_intent1
+    cur_slot["intent2"] = cur_intent2
+    cur_slot[
+        "debug_text"
+    ] = f"intent1={cur_intent1} intent2={cur_intent2} slot={cur_slot}"
+    cur_slot["response_text"] = response_text
+    return cur_slot
 
 
 if __name__ == "__main__":
