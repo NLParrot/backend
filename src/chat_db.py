@@ -62,8 +62,33 @@ class ChatDB:
 
         return professor_name
 
+    def query_course_professor(self, course_name, professor_name):
+        if course_name == None or professor_name == None:
+            return None, None
+
+        professor_vector = self.embedding_model.encode(professor_name)
+        course_vector = self.embedding_model.encode(course_name)
+        course_col = self.connection.collections.get("Course")
+        result = course_col.query.near_vector(
+            near_vector=((professor_vector + course_vector) / 2).tolist(), limit=1
+        ).objects
+
+        if len(result) == 0:
+            course = self.query_course(course_name)
+            professor = self.query_professor(professor_name)
+            return course, professor
+
+        return (
+            result[0].properties["course_name"],
+            result[0].properties["professor_name"],
+        )
+
     def query_evaluations(self, course, professor, keyword_query):
-        if keyword_query == None:
+        if any(k == None for k in (course, professor, keyword_query)):
+            return None
+
+        course, professor = self.query_course_professor(course, professor)
+        if course == None or professor == None:
             return None
 
         course_evaluation = self.connection.collections.get("CourseEvaluation")

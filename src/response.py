@@ -41,8 +41,8 @@ class ChatResponse:
     def get_response_course_evaluation(self, slot):
         client = ChatDB()
 
-        course = client.query_course(slot.get("course"))
-        professor = client.query_professor(slot.get("professor"))
+        course = slot.get("course")
+        professor = slot.get("professor")
 
         if course == None and professor == None:
             return "제대로 이해하지 못했습니다. 다시 말해주세요!"
@@ -75,8 +75,9 @@ class ChatResponse:
     # Where to get Data?
     def get_response_course_info(self, slot):
         client = ChatDB()
-        course = client.query_course(slot.get("course"))
-        professor = client.query_professor(slot.get("professor"))
+        course, professor = client.query_course_professor(
+            slot.get("course"), slot.get("professor")
+        )
 
         if course == None and professor == None:
             return "교수님과 수업 이름을 제대로 인식하지 못했습니다. 다시 말해주세요!\n"
@@ -86,16 +87,22 @@ class ChatResponse:
             res = self.course.loc[
                 (self.course["교수진"] == professor) & (self.course["과목명"] == course)
             ]
+            if res.empty:
+                return f"이번 학기에 {professor} 교수님의 {course} 수업에 대한 정보가 없습니다!\n"
             response = f"{professor} 교수님의 {course} 수업에 대한 정보를 보여드리겠습니다!\n"
 
         # query all about course
         elif course:
             res = self.course.loc[self.course["과목명"] == course]
+            if res.empty:
+                return f"이번 학기에 {course} 수업에 대한 정보가 없습니다!\n"
             response = f"{course} 수업에 대한 정보를 보여드리겠습니다!\n"
 
         # query all about professor
         else:
             res = self.course.loc[self.course["교수진"] == professor]
+            if res.empty:
+                return f"이번 학기에 {professor} 교수님의 수업에 대한 정보가 없습니다!\n"
             response = f"{professor} 교수님이 여시는  수업에 대한 정보를 보여드리겠습니다!\n"
 
         for i, (_, r) in enumerate(res.iterrows(), 1):
@@ -150,6 +157,8 @@ class ChatResponse:
         path = self.map.astar_multidigraph(start, goal)
         slot["path"] = path
         slot["display_path_map"] = True
+        slot["location_from"] = from_loc_name
+        slot["location_to"] = to_loc_name
 
         response = f"{from_loc_name}에서 {to_loc_name}까지 가는 길을 알려 드리겠습니다!\n"
         return response
@@ -182,7 +191,7 @@ class ChatResponse:
 
     def get_response_fa_information(self, slot):
         response = "FA 관련은 학칙을 확인하는게 가장 정확합니다!\n"
-        response += "관련 부분은 다음과 같습니다."
+        response += "관련 부분은 다음과 같습니다.\n\n"
         response += """제25조 (FA제도) ① 한 학기 동안 학생이 수강하는 과목에 대하여 결석허용 한계를 정하고 이를 초과할 경우에는 그 과목의 성적은 FA로 기록되며 과목낙제가 된다.
        ② 매 과목당 결석 허용 회수는 한 학기를 통산하여 주당 수업시간수의 두 배까지이다. 즉, 한 학기에 주당 3시간 과목은 6시간, 주당 2시간 과목은 4시간까지 결석이 허용된다. 3회의 지각은 한 번의 결석으로 환산된다. 
        ③ 졸업하는 마지막 학기의 결석 허용한계는 위 한계의 두 배이다. (여기서 졸업하는 학기란 졸업예정자로 확정된 학기를 말한다.)
@@ -215,7 +224,7 @@ class ChatResponse:
         6. 가족의 병고
         7. 가사 및 개인사정
        [전문개정 2006.2.14]"""
-        response +="\n\n출처: https://www.sogang.ac.kr/gopage/goboard12.jsp?bbsConfigFK=170&pkid=500062"
+        response += "\n\n출처: https://www.sogang.ac.kr/gopage/goboard12.jsp?bbsConfigFK=170&pkid=500062"
         return response
 
     def get_response_retake_information(self, slot):

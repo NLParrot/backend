@@ -6,6 +6,7 @@ class MapDB:
     def __init__(self):
         with open("../data/school_road_graph.pkl", "rb") as f:
             self.graph = pickle.load(f)
+
         self.nodes = list(self.graph.nodes(data=True))
         kdtree_data = list(map(lambda x: [x[1]["y"], x[1]["x"]], self.nodes))
         self.kdt = KDTree(kdtree_data)
