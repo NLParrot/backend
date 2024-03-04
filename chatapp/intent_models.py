@@ -4,7 +4,6 @@ from transformers import (
     AutoTokenizer,
     AutoModelForSequenceClassification,
 )
-import logging
 
 
 class Intent1:

@@ -1,16 +1,15 @@
-from flask import Flask, request
-from flask_cors import CORS
 
+from flask import Flask
+from flask import request
+from flask_cors import CORS
 import logging
 
 from intent_models import *
 from state_models import *
 from response import *
 
-
 app = Flask(__name__)
 CORS(app, resources={r"/api/*": {"origins": "http://127.0.0.1:8000"}})
-
 
 intent1 = Intent1(
     tokenizer_path="../models/intent1_model_1", model_path="../models/intent1_model_1"
@@ -25,20 +24,17 @@ intent2 = Intent2(
 response = ChatResponse()
 state = NERState("../models/ner_1")
 
-
-# Logging
-# root_logger = logging.getLogger()
-# root_logger.setLevel(logging.INFO)
-# logging.basicConfig(filename="log.log", encoding="utf-8", level=logging.INFO)
-# handler = logging.StreamHandler(sys.stdout)
-# handler.setLevel(logging.INFO)
-# root_logger.addHandler(handler)
-
+log = logging.getLogger(__name__)
+user_logger = logging.getLogger("user_logger")
+user_logger_file_handler = logging.FileHandler("../log/dialogue.log", mode="a")
+user_logger.setLevel(logging.INFO)
+user_logger.addHandler(user_logger_file_handler)
+user_logger.propagate = False
 
 @app.route("/api/chat/message", methods=["POST"])
 def chat():
     request_json = request.get_json()
-    logging.debug(request_json)
+    log.debug(request_json)
 
     user_text = request_json.get("user_text", "")
     cur_intent1 = request_json.get("intent1")
@@ -60,11 +56,15 @@ def chat():
 
     cur_slot["intent1"] = cur_intent1
     cur_slot["intent2"] = cur_intent2
-    cur_slot[
-        "debug_text"
-    ] = f"intent1={cur_intent1} intent2={cur_intent2} slot={cur_slot}"
     cur_slot["response_text"] = response_text
+
+    user_logger.info(f"u___%s___u", user_text)
+    user_logger.info(f"i1___%s___1i", cur_intent1)
+    user_logger.info(f"i2___%s___2i", cur_intent2)
+    user_logger.info(f"s___%s___s", cur_slot)
+    user_logger.info(f"r___%s___r", response_text)
     return cur_slot
+
 
 
 if __name__ == "__main__":

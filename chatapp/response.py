@@ -7,17 +7,14 @@ from chat_db import ChatDB
 from intent_models import Intent2
 from map import MapDB
 
-logging.basicConfig(level=logging.DEBUG)
-
 
 class ChatResponse:
     def __init__(self):
         with open("../data/address_data.json") as f:
             address_location_json = json.load(f)
 
-        self.course = pd.read_csv("../data/course.csv")
-
         self.address_location_dict = {x["부서명"]: x for x in address_location_json}
+        self.course = pd.read_csv("../data/course.csv")
         self.map = MapDB()
 
     def __call__(self, intent2, slot):
@@ -41,8 +38,7 @@ class ChatResponse:
     def get_response_course_evaluation(self, slot):
         client = ChatDB()
 
-        course = slot.get("course")
-        professor = slot.get("professor")
+        course, professor = client.query_course_professor(slot.get("course"), slot.get("professor"))
 
         if course == None and professor == None:
             return "제대로 이해하지 못했습니다. 다시 말해주세요!"
@@ -72,7 +68,6 @@ class ChatResponse:
 
         return response
 
-    # Where to get Data?
     def get_response_course_info(self, slot):
         client = ChatDB()
         course, professor = client.query_course_professor(

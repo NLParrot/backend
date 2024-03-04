@@ -10,8 +10,6 @@ from transformers import (
 )
 from transformers import TokenClassificationPipeline
 
-logging.basicConfig(level=logging.DEBUG)
-
 
 class StateModels:
     @abstractmethod
@@ -39,6 +37,9 @@ class NERState(StateModels):
         return slot
 
 
+
+# A State Management model that uses seq2seq models
+# Currently not used due to low performance
 class Seq2SeqState(StateModels):
     def __init__(
         self, tokenizer_path, course_path, location_path, pathfind_path, service_path
@@ -94,7 +95,7 @@ class Seq2SeqState(StateModels):
 
     def get_slot_course(self, user_text) -> dict:
         inf = self.course_infer(user_text)
-        logging.info(inf)
+        logging.debug(inf)
         output = re.sub(r"\[BOS\]", "", inf)
         output = re.sub(r"\[EOS\]", "", output)
         output = re.split(r"\[SEP\]", output)
@@ -107,7 +108,7 @@ class Seq2SeqState(StateModels):
 
     def get_slot_location(self, user_text) -> dict:
         inf = self.location_infer(user_text)
-        logging.info(inf)
+        logging.debug(inf)
         output = re.sub(r"\[BOS\]", "", inf)
         output = re.sub(r"\[EOS\]", "", output)
         output = re.split(r"\[SEP\]", output)
@@ -115,7 +116,7 @@ class Seq2SeqState(StateModels):
 
     def get_slot_pathfind(self, user_text) -> dict:
         inf = self.pathfind_infer(user_text)
-        logging.info(inf)
+        logging.debug(inf)
         output = re.sub(r"\[BOS\]", "", inf)
         output = re.sub(r"\[EOS\]", "", output)
         output = re.split(r"\[SEP\]", output)
@@ -123,7 +124,7 @@ class Seq2SeqState(StateModels):
 
     def get_slot_service(self, user_text) -> dict:
         inf = self.service_infer(user_text)
-        logging.info(inf)
+        logging.debug(inf)
         output = re.sub(r"\[BOS\]", "", inf)
         output = re.sub(r"\[EOS\]", "", output)
         output = re.split(r"\[SEP\]", output)

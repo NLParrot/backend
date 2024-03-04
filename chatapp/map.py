@@ -25,11 +25,8 @@ class MapDB:
         if heuristic == None:
             heuristic = self.eucledian_distance
 
-        # Initialize the priority queue (open list) with the start node
         open_list = [(0, start)]  # (score, node)
-        # Initialize the dictionary to keep track of the parent nodes
         parent_nodes = {}
-        # Initialize the dictionary to keep track of the cost to reach each node from the start node
         g_score = {node: float("inf") for node in self.graph.nodes()}
         g_score[start] = 0
 
