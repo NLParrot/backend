@@ -4,7 +4,7 @@ import weaviate.classes as wvc
 from sentence_transformers import SentenceTransformer
 
 
-class SingletonModel:
+class EmbeddingModel:
     _instance = None
 
     @classmethod
@@ -14,10 +14,10 @@ class SingletonModel:
         return cls._instance
 
 
-class ChatDB:
+class VecDB:
     def __init__(self):
         self.connection = weaviate.connect_to_local(port=8080, grpc_port=50051)
-        self.embedding_model = SingletonModel.getInstance()
+        self.embedding_model = EmbeddingModel.getInstance()
 
     def __del__(self):
         self.connection.close()
@@ -84,7 +84,9 @@ class ChatDB:
         )
 
     def query_evaluations(self, course, professor, keyword_query):
-        if any(k == None for k in (course, professor, keyword_query)):
+        if keyword_query == None:
+            keyword_query = "학점"
+        if any(k == None for k in (course, professor)):
             return None
 
         course, professor = self.query_course_professor(course, professor)
@@ -152,5 +154,5 @@ class ChatDB:
 
 
 if __name__ == "__main__":
-    c = ChatDB()
+    c = VecDB()
     print(c.query_professor("소정민"))

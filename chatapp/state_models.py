@@ -2,13 +2,14 @@ from abc import abstractmethod
 import torch
 import logging
 import re
-from intent_models import Intent1, Intent2
+from chatapp.intent_models import Intent1, Intent2
 from transformers import (
     AutoModelForSeq2SeqLM,
     AutoModelForTokenClassification,
     AutoTokenizer,
 )
 from transformers import TokenClassificationPipeline
+from config import config
 
 
 class StateModels:
@@ -18,10 +19,12 @@ class StateModels:
 
 
 class NERState(StateModels):
-    def __init__(self, path):
-        tokenizer = AutoTokenizer.from_pretrained(path, local_files_only=True)
+    def __init__(self):
+        tokenizer = AutoTokenizer.from_pretrained(
+            config.get_model_path("ner"), local_files_only=True
+        )
         model = AutoModelForTokenClassification.from_pretrained(
-            path, local_files_only=True
+            config.get_model_path("ner"), local_files_only=True
         )
         self.classifier = TokenClassificationPipeline(
             model=model, tokenizer=tokenizer, aggregation_strategy="first"
@@ -35,7 +38,6 @@ class NERState(StateModels):
             slot[group["entity_group"]] = group["word"]
         logging.debug(f"(state)slot={slot}")
         return slot
-
 
 
 # A State Management model that uses seq2seq models

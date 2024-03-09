@@ -1,0 +1,16 @@
+
+[general]
+dialogue_log = "./log/dialogue.log"
+
+[model_path]
+intent1 = "./models/intent1_model_1"
+intent2_course = "./models/intent2_course_model_1"
+intent2_map = "./models/intent2_map_model_1"
+intent2_rule = "./models/intent2_rule_model_1"
+intent2_service = "./models/intent2_service_model_1"
+ner = "./models/ner_1"
+
+[db_path]
+department = "./data/department.db"
+course = "./data/course.db"
+map = "./data/school_road_graph.pkl"

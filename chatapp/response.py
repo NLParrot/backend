@@ -2,22 +2,41 @@
 import json
 import logging
 import pandas as pd
+import tomllib
+import random
 
-from chat_db import ChatDB
-from intent_models import Intent2
-from map import MapDB
+from functools import wraps
+from chatapp.db.course_db import CourseDB
+from config import config
+
+from .db.vec_db import VecDB
+from .db.map_db import MapDB
+from .intent_models import Intent2
+
+from .actions.course.course_evaluation import course_evaluation_response
+
+
+handlers = {
+    Intent2.COURSE_EVALUATION: course_evaluation_response,
+}
+
 
 
 class ChatResponse:
     def __init__(self):
-        with open("../data/address_data.json") as f:
-            address_location_json = json.load(f)
+        with open("./data/raw/department_data.json") as f:
+            department_json = json.load(f)
 
-        self.address_location_dict = {x["부서명"]: x for x in address_location_json}
-        self.course = pd.read_csv("../data/course.csv")
+        self.address_location_dict = {x["부서명"]: x for x in department_json}
         self.map = MapDB()
 
     def __call__(self, intent2, slot):
+        for handler_intent2, func in handlers.items():
+            if handler_intent2 == intent2:
+                return func(slot)
+
+        return "no response made yet"
+
         if intent2 == Intent2.COURSE_EVALUATION:
             return self.get_response_course_evaluation(slot)
         elif intent2 == Intent2.COURSE_INFORMATION:
@@ -35,44 +54,17 @@ class ChatResponse:
 
         return "no response made yet"
 
-    def get_response_course_evaluation(self, slot):
-        client = ChatDB()
-
-        course, professor = client.query_course_professor(slot.get("course"), slot.get("professor"))
-
-        if course == None and professor == None:
-            return "제대로 이해하지 못했습니다. 다시 말해주세요!"
-        elif course == None:
-            slot["status"] = "need_info"
-            slot["info_key"] = "course"
-            return f"{professor} 교수님의 어떤 수업을 말하시는지 이해하지 못했습니다. 수업명을 다시 알려주세요\n"
-        elif professor == None:
-            slot["status"] = "need_info"
-            slot["info_key"] = "professor"
-            return f"어떤 교수님의 {course} 수업을 말하시는지 이해하지 못했습니다. 교수님 이름을 다시 입력해주세요\n"
-
-        if slot.get("course_keyword"):
-            evaluations = client.query_evaluations(
-                course, professor, slot.get("course_keyword")
-            )
-        else:
-            evaluations = client.query_evaluations(course, professor, "학점")
-
-        if evaluations == None:
-            return f"{professor} 교수님의 {course} 강의를 찾을 수 없습니다. 무슨 강의인지 찾지 못했습니다"
-
-        response = f"{professor} 교수님의 {course} 강의에 대한 강의 평가를 찾으시는군요!\n"
-        response += "몇가지를 보여드릴게요\n"
-        for i, eval in enumerate(evaluations, 1):
-            response += f"# {i}\n{eval}\n\n"
-
-        return response
 
     def get_response_course_info(self, slot):
-        client = ChatDB()
+        client = VecDB()
+        course_db = CourseDB()
         course, professor = client.query_course_professor(
             slot.get("course"), slot.get("professor")
         )
+
+        course_db.find_by_course("컴퓨터네트워크")
+        course_db.find_by_professor("소정민")
+        course_db.find_by_course_and_professor(course, professor)
 
         if course == None and professor == None:
             return "교수님과 수업 이름을 제대로 인식하지 못했습니다. 다시 말해주세요!\n"
@@ -111,7 +103,7 @@ class ChatResponse:
 
     # Need map information
     def get_response_location(self, slot):
-        client = ChatDB()
+        client = VecDB()
 
         location_name, coordinate = client.query_location_name(slot.get("location"))
         if location_name == None:
@@ -126,7 +118,7 @@ class ChatResponse:
 
     # Need map information
     def get_response_pathfind(self, slot):
-        client = ChatDB()
+        client = VecDB()
 
         from_loc_name, from_coord = client.query_location_name(
             slot.get("location_from")
@@ -159,7 +151,7 @@ class ChatResponse:
         return response
 
     def get_response_contacts(self, slot):
-        client = ChatDB()
+        client = VecDB()
 
         department_name = client.query_department_name(slot.get("keyword"))
         if department_name == None:

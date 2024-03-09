@@ -1,10 +1,12 @@
 from scipy.spatial import KDTree
 import pickle
 
+from config import config
+
 
 class MapDB:
     def __init__(self):
-        with open("../data/school_road_graph.pkl", "rb") as f:
+        with open(config.get_db_path("map"), "rb") as f:
             self.graph = pickle.load(f)
 
         self.nodes = list(self.graph.nodes(data=True))

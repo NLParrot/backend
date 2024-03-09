@@ -1,37 +1,27 @@
-
-from flask import Flask
+from flask import Blueprint
 from flask import request
-from flask_cors import CORS
 import logging
 
-from intent_models import *
-from state_models import *
-from response import *
+from chatapp.intent_models import *
+from chatapp.state_models import *
+from chatapp.response import *
 
-app = Flask(__name__)
-CORS(app, resources={r"/api/*": {"origins": "http://127.0.0.1:8000"}})
+chat_blueprint = Blueprint("chatapp", __name__)
 
-intent1 = Intent1(
-    tokenizer_path="../models/intent1_model_1", model_path="../models/intent1_model_1"
-)
-intent2 = Intent2(
-    tokenizer_path="../models/intent1_model_1",
-    course_path="../models/intent2_course_model_1",
-    map_path="../models/intent2_map_model_1",
-    service_path="../models/intent2_school_service_model_1",
-    rule_path="../models/intent2_school_rule_model_1",
-)
+intent1 = Intent1()
+intent2 = Intent2()
 response = ChatResponse()
-state = NERState("../models/ner_1")
+state = NERState()
 
 log = logging.getLogger(__name__)
 user_logger = logging.getLogger("user_logger")
-user_logger_file_handler = logging.FileHandler("../log/dialogue.log", mode="a")
+user_logger_file_handler = logging.FileHandler("./log/dialogue.log", mode="a")
 user_logger.setLevel(logging.INFO)
 user_logger.addHandler(user_logger_file_handler)
 user_logger.propagate = False
 
-@app.route("/api/chat/message", methods=["POST"])
+
+@chat_blueprint.route("/api/chat/message", methods=["POST"])
 def chat():
     request_json = request.get_json()
     log.debug(request_json)
@@ -58,14 +48,14 @@ def chat():
     cur_slot["intent2"] = cur_intent2
     cur_slot["response_text"] = response_text
 
-    user_logger.info(f"u___%s___u", user_text)
-    user_logger.info(f"i1___%s___1i", cur_intent1)
-    user_logger.info(f"i2___%s___2i", cur_intent2)
-    user_logger.info(f"s___%s___s", cur_slot)
-    user_logger.info(f"r___%s___r", response_text)
+    log_dialogue(user_text, cur_intent1, cur_intent2, cur_slot, response_text)
+
     return cur_slot
 
+def log_dialogue(user_text, intent1, intent2, slot, response_text):
+    user_logger.info(f"u___%s___u", user_text)
+    user_logger.info(f"i1___%s___1i", intent1)
+    user_logger.info(f"i2___%s___2i", intent2)
+    user_logger.info(f"s___%s___s", slot)
+    user_logger.info(f"r___%s___r", response_text)
 
-
-if __name__ == "__main__":
-    app.run(port=5000)

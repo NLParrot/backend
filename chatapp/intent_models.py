@@ -5,6 +5,8 @@ from transformers import (
     AutoModelForSequenceClassification,
 )
 
+from config import config
+
 
 class Intent1:
     COURSE = "강의"
@@ -12,13 +14,13 @@ class Intent1:
     SERVICE = "학교관련서비스"
     RULE = "학칙"
 
-    def __init__(self, tokenizer_path, model_path):
+    def __init__(self):
         koelectra_tokenizer = AutoTokenizer.from_pretrained(
-            tokenizer_path, local_fiels_only=True
+            config.get_model_path("intent1"), local_fiels_only=True
         )
 
         self.model = AutoModelForSequenceClassification.from_pretrained(
-            model_path, local_files_only=True
+            config.get_model_path("intent1"), local_files_only=True
         )
 
         self.classifier = TextClassificationPipeline(
@@ -53,25 +55,25 @@ class Intent2:
     FA_INFORMATION = "FA제도"
     RETAKE_INFORMATION = "재수강"
 
-    def __init__(self, tokenizer_path, course_path, map_path, service_path, rule_path):
+    def __init__(self):
         koelectra_tokenizer = AutoTokenizer.from_pretrained(
-            tokenizer_path, local_fiels_only=True
+            config.get_model_path("intent1"), local_fiels_only=True
         )
 
         self.course_model = AutoModelForSequenceClassification.from_pretrained(
-            course_path, local_files_only=True
+            config.get_model_path("intent2_course"), local_files_only=True
         )
 
         self.map_model = AutoModelForSequenceClassification.from_pretrained(
-            map_path, local_files_only=True
+            config.get_model_path("intent2_map"), local_files_only=True
         )
 
         self.service_model = AutoModelForSequenceClassification.from_pretrained(
-            service_path, local_files_only=True
+            config.get_model_path("intent2_service"), local_files_only=True
         )
 
         self.rule_model = AutoModelForSequenceClassification.from_pretrained(
-            rule_path, local_files_only=True
+            config.get_model_path("intent2_rule"), local_files_only=True
         )
 
         self.course_classifier = TextClassificationPipeline(
