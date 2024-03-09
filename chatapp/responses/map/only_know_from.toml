@@ -1,0 +1,8 @@
+utter = [
+    """
+{from_loc_name}에서 어디로 가고 싶은지 이해하지 못했습니다! 다시 말해주세요!"""
+]
+
+variables = [
+    "from_loc_name"
+]

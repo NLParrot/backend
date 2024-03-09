@@ -1,0 +1,9 @@
+utter = [
+    """
+{location_from}에서 {location_to}로 가는 길을 지도로 표시해 드리겠습니다!"""
+]
+
+variables = [
+    "location_from",
+    "location_to"
+]

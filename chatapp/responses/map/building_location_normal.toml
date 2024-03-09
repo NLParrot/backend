@@ -1,0 +1,12 @@
+utter = [
+    """
+{location_name}의 위치를 보여드릴게요!""",
+    """
+{location_name}은 여기에 있습니다!""",
+    """
+{location_name}의 위치를 지도에 표시해 드리겠습니다!"""
+]
+
+variables = [
+    "location_name"
+]

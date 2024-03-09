@@ -26,7 +26,7 @@ def _course_not_opened_this_semester(course=None, professor=None):
 
 def _response_course_info(row_list):
     response = ""
-    for i, (_, r) in enumerate(row_list, 1):
+    for i, r in enumerate(row_list, 1):
         (
             id,
             major,
@@ -104,15 +104,15 @@ def course_information_response(slot):
         slot.get("course"), slot.get("professor")
     )
 
-    # Nothing known
-    if course == None and professor == None:
-        return _course_none_professor_none()
+    # query about course + professor
+    if course and professor:
+        return _course_and_professor(course, professor)
     # query all about course
     elif course:
         return _course_all(course)
     # query all about professor
     elif professor:
         return _professor_all(professor)
-    # query about course + professor
+    # Nothing known
     else:
-        return _course_and_professor(course, professor)
+        return _course_none_professor_none()

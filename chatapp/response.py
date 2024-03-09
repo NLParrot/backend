@@ -14,11 +14,16 @@ from .db.map_db import MapDB
 from .intent_models import Intent2
 
 from .actions.course.course_evaluation import course_evaluation_response
+from .actions.course.course_information import course_information_response
+from .actions.map.building_location import building_location_response
+from .actions.map.pathfind import pathfind_response
 
 
 handlers = {
     Intent2.COURSE_EVALUATION: course_evaluation_response,
     Intent2.COURSE_INFORMATION: course_information_response,
+    Intent2.BUILDING_LOCATION: building_location_response,
+    Intent2.PATHFIND: pathfind_response,
 }
 
 
@@ -38,10 +43,6 @@ class ChatResponse:
         return "no response made yet"
         if a:
             pass
-        elif intent2 == Intent2.BUILDING_LOCATION:
-            return self.get_response_location(slot)
-        elif intent2 == Intent2.PATHFIND:
-            return self.get_response_pathfind(slot)
         elif intent2 == Intent2.CONTACTS:
             return self.get_response_contacts(slot)
         elif intent2 == Intent2.FA_INFORMATION:
@@ -52,19 +53,6 @@ class ChatResponse:
         return "no response made yet"
 
     # Need map information
-    def get_response_location(self, slot):
-        client = VecDB()
-
-        location_name, coordinate = client.query_location_name(slot.get("location"))
-        if location_name == None:
-            return "이해하지 못했습니다! 다시 말해주세요!\n"
-
-        response = f"{location_name}의 위치를 보여드릴게요\n"
-        slot["location_name"] = location_name
-        slot["coordinate"] = coordinate
-        slot["display_location_map"] = True
-
-        return response
 
     # Need map information
     def get_response_pathfind(self, slot):
