@@ -52,10 +52,10 @@ def chat():
 
     return cur_slot
 
+
 def log_dialogue(user_text, intent1, intent2, slot, response_text):
     user_logger.info(f"u___%s___u", user_text)
     user_logger.info(f"i1___%s___1i", intent1)
     user_logger.info(f"i2___%s___2i", intent2)
     user_logger.info(f"s___%s___s", slot)
     user_logger.info(f"r___%s___r", response_text)
-

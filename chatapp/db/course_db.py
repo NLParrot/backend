@@ -16,7 +16,6 @@ class CourseDB:
             "SELECT * FROM course WHERE course_name=?", (course,)
         ).fetchall()
 
-
         print(course, courses)
 
     def find_by_professor(self, professor):

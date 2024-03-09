@@ -1,0 +1,12 @@
+
+utter = [
+    """
+{professor} 교수님의 {course} 강의에 대한 강의평가를 찾을 수 없습니다!
+아직 아무도 평가를 안했나 보네요..."""
+
+]
+
+variables = [
+    "course",
+    "professor"
+]

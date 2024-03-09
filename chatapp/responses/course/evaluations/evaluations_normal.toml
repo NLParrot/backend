@@ -1,0 +1,10 @@
+utter = [
+"""
+{professor} 교수님의 {course} 강의에 대한 강의 평가를 찾으시는군요!
+다른 학우분 들이 하신 평가 몇가지를 보여드리겠습니다."""
+]
+
+variables = [
+    "course",
+    "professor"
+]

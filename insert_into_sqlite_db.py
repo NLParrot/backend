@@ -81,7 +81,8 @@ def insert_building_data():
 
             for n in building["건물명"]:
                 cursor.execute(
-                    "INSERT INTO building_names (id, building_name) values (?, ?)", (pk, n)
+                    "INSERT INTO building_names (id, building_name) values (?, ?)",
+                    (pk, n),
                 )
     con.close()
 
@@ -131,7 +132,6 @@ def insert_course_data():
                 ),
             )
     con.close()
-
 
 
 if __name__ == "__main__":

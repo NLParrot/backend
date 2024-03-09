@@ -1,0 +1,8 @@
+utter = [
+    """
+이번 학기에 {course} 수업에 대한 정보가 없습니다!"""
+]
+
+variables = [
+    "course"
+]

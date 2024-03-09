@@ -18,8 +18,8 @@ from .actions.course.course_evaluation import course_evaluation_response
 
 handlers = {
     Intent2.COURSE_EVALUATION: course_evaluation_response,
+    Intent2.COURSE_INFORMATION: course_information_response,
 }
-
 
 
 class ChatResponse:
@@ -36,11 +36,8 @@ class ChatResponse:
                 return func(slot)
 
         return "no response made yet"
-
-        if intent2 == Intent2.COURSE_EVALUATION:
-            return self.get_response_course_evaluation(slot)
-        elif intent2 == Intent2.COURSE_INFORMATION:
-            return self.get_response_course_info(slot)
+        if a:
+            pass
         elif intent2 == Intent2.BUILDING_LOCATION:
             return self.get_response_location(slot)
         elif intent2 == Intent2.PATHFIND:
@@ -53,53 +50,6 @@ class ChatResponse:
             return self.get_response_retake_information(slot)
 
         return "no response made yet"
-
-
-    def get_response_course_info(self, slot):
-        client = VecDB()
-        course_db = CourseDB()
-        course, professor = client.query_course_professor(
-            slot.get("course"), slot.get("professor")
-        )
-
-        course_db.find_by_course("컴퓨터네트워크")
-        course_db.find_by_professor("소정민")
-        course_db.find_by_course_and_professor(course, professor)
-
-        if course == None and professor == None:
-            return "교수님과 수업 이름을 제대로 인식하지 못했습니다. 다시 말해주세요!\n"
-
-        # query about course + professor
-        elif course and professor:
-            res = self.course.loc[
-                (self.course["교수진"] == professor) & (self.course["과목명"] == course)
-            ]
-            if res.empty:
-                return f"이번 학기에 {professor} 교수님의 {course} 수업에 대한 정보가 없습니다!\n"
-            response = f"{professor} 교수님의 {course} 수업에 대한 정보를 보여드리겠습니다!\n"
-
-        # query all about course
-        elif course:
-            res = self.course.loc[self.course["과목명"] == course]
-            if res.empty:
-                return f"이번 학기에 {course} 수업에 대한 정보가 없습니다!\n"
-            response = f"{course} 수업에 대한 정보를 보여드리겠습니다!\n"
-
-        # query all about professor
-        else:
-            res = self.course.loc[self.course["교수진"] == professor]
-            if res.empty:
-                return f"이번 학기에 {professor} 교수님의 수업에 대한 정보가 없습니다!\n"
-            response = f"{professor} 교수님이 여시는  수업에 대한 정보를 보여드리겠습니다!\n"
-
-        for i, (_, r) in enumerate(res.iterrows(), 1):
-            response += f"{i}.\n"
-            response += f"{r['과목명']}({r['과목번호']}) ({r['교수진']})\n"
-            response += f"학점: {r['학점']}\n"
-            response += f"수업시간: {r['수업시간/강의실']}\n"
-            response += f"권장학년: {r['권장학년']}\n"
-
-        return response
 
     # Need map information
     def get_response_location(self, slot):

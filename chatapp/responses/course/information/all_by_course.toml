@@ -1,0 +1,8 @@
+utter = [
+    """
+{course} 수업에 대한 정보를 보여드리겠습니다!"""
+]
+
+variables = [
+    "course"
+]
