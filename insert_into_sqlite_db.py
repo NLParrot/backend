@@ -47,13 +47,13 @@ def insert_department_data():
                 if isinstance(v, list):
                     for vv in v:
                         cursor.execute(
-                            "INSERT INTO address(id, address_type, address_value) values (?, ?, ?)",
+                            "INSERT INTO contacts(id, contact_type, contact_value) values (?, ?, ?)",
                             (pk, k, vv),
                         )
 
                 else:
                     cursor.execute(
-                        "INSERT INTO address(id, address_type, address_value) values (?, ?, ?)",
+                        "INSERT INTO contacts(id, contact_type, contact_value) values (?, ?, ?)",
                         (pk, k, v),
                     )
     con.close()

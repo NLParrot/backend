@@ -1,6 +1,6 @@
 DROP TABLE if exists department;
 DROP TABLE if exists location;
-DROP TABLE if exists address;
+DROP TABLE if exists contacts;
 
 
 CREATE TABLE department(
@@ -13,9 +13,9 @@ CREATE TABLE location(
   location_name TEXT,
   FOREIGN KEY(id) REFERENCES department(id)
 );
-create TABLE address(
+create TABLE contacts(
   id INTEGER,
-  address_type TEXT,
-  address_value TEXT,
+  contact_type TEXT,
+  contact_value TEXT,
   FOREIGN KEY(id) REFERENCES department(id)
 );

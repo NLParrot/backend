@@ -1,8 +1,8 @@
 utter = [
     """
-어디서부터 {to_loc_name}까지 가고 싶은지 이해하지 못했습니다! 다시 말해주세요"""
+어디서부터 {location_to}까지 가고 싶은지 이해하지 못했습니다! 다시 말해주세요"""
 ]
 
 variables = [
-    "to_loc_name"
+    "location_to"
 ]

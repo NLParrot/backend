@@ -1,0 +1,8 @@
+utter = [
+    """
+{department_name}의 위치/연락처를 찾으시나요? 제가 알려드릴게요!"""
+]
+
+variables = [
+    "department_name"
+]

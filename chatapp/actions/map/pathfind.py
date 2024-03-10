@@ -2,18 +2,22 @@ from chatapp.db.map_db import MapDB
 from chatapp.db.vec_db import VecDB
 from chatapp.responses.select_response import SelectResponse
 
+
 def _from_none_to_none():
     return SelectResponse().get_response("general/cannot_understand")
 
+
 def _only_know_to(location_to):
-    return SelectResponse().get_response("map/only_know_to", {
-        "location_to": location_to
-    })
+    return SelectResponse().get_response(
+        "map/only_know_to", {"location_to": location_to}
+    )
+
 
 def _only_know_from(location_from):
-    return SelectResponse().get_response("map/only_know_from", {
-        "location_from": location_from
-    })
+    return SelectResponse().get_response(
+        "map/only_know_from", {"location_from": location_from}
+    )
+
 
 # Finds shortes path, returns response
 def _find_path(slot, location_from, from_coord, location_to, to_coord):
@@ -27,12 +31,13 @@ def _find_path(slot, location_from, from_coord, location_to, to_coord):
     slot["location_from"] = location_from
     slot["location_to"] = location_to
 
-    return SelectResponse().get_response("map/pathfind_normal", {
-        "location_to": location_to,
-        "location_from": location_from
-    })
+    return SelectResponse().get_response(
+        "map/pathfind_normal",
+        {"location_to": location_to, "location_from": location_from},
+    )
 
-def get_response_pathfind(self, slot):
+
+def pathfind_response(slot):
     client = VecDB()
 
     from_loc_name, from_coord = client.query_location_name(slot.get("location_from"))
