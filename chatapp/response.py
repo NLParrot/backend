@@ -21,7 +21,7 @@ handlers = {
     Intent2.PATHFIND: pathfind_response,
     Intent2.CONTACTS: contacts_response,
     Intent2.FA_INFORMATION: fa_response,
-    Intent2.RETAKE_INFORMATION: retake_response
+    Intent2.RETAKE_INFORMATION: retake_response,
 }
 
 
@@ -39,9 +39,3 @@ class ChatResponse:
                 return func(slot)
 
         return "no response made yet"
-    
-
-
-    
-
-    

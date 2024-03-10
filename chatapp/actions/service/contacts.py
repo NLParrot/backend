@@ -19,13 +19,16 @@ def _has_department_name(department_name):
     print(locations)
     print(contacts)
 
-    response = SelectResponse().get_response("service/contacts_normal", {
-        "department_name": department_name
-    }) + '\n'
+    response = (
+        SelectResponse().get_response(
+            "service/contacts_normal", {"department_name": department_name}
+        )
+        + "\n"
+    )
 
-    # generate information response 
+    # generate information response
     response += "위치: "
-    response += ", ".join(locations) + '\n'
+    response += ", ".join(locations) + "\n"
     response += "연락처:\n"
     for contact_type, contact_value in contacts:
         response += f"  - {contact_type}: {contact_value}\n"

@@ -35,7 +35,7 @@ class DepartmentDB:
 
     def find_all_contacts(self, id):
         cursor = self.connection.cursor()
-    
+
         return cursor.execute(
             """
             SELECT contact_type, contact_value
@@ -44,4 +44,3 @@ class DepartmentDB:
             """,
             (id,),
         ).fetchall()
-
