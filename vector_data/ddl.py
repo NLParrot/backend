@@ -70,3 +70,5 @@ client.collections.create("Buildings",
                               wvcc.Property(name="building_name", data_type=wvcc.DataType.TEXT),
                               wvcc.Property(name="coordinates", data_type=wvcc.DataType.GEO_COORDINATES)
                           ])
+
+client.close()
