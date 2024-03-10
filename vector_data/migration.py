@@ -23,7 +23,7 @@ def migrate_data(collection_src, collection_tgt):
 
 
 collections = client_src.collections.list_all()
-for k, v in collections:
+for k in collections:
     reviews_src = client_src.collections.get(k)
     reviews_tgt = client_tgt.collections.get(k)
     migrate_data(reviews_src, reviews_tgt)
