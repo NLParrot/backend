@@ -29,7 +29,7 @@ flask -A wsgi run
 ## Structure of the project
 - Provides one API endpoint /api/chat/message
 - Formulates a response based on the dialogue state, and user input
-- ![Image of Project Structure](url)
+- ![Image of Project Structure](img/structure.png)
     1. Classifies user intent (Intent1, Intent2 classes)
         - Goes through two levels of models to enhance classification accuracy
     2. Gets dialogue state by extracting entities in the sentence with a NER model. (NERState class)
@@ -67,6 +67,9 @@ flask -A wsgi run
 - The DDL is defined in data/schema/
 - If raw data has changed, you can run insert_into_sqlite_db.py to put the data into sqlite .db file
 
-
+### NetworkX
+- Not a proper DB, but a graph representing roads inside/around the university
+- Data from OpenStreetMap
+    - Fixed some data from openstreetmap
 
 
