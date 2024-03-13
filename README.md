@@ -29,21 +29,23 @@ flask -A wsgi run
 ## Structure of the project
 - Provides one API endpoint /api/chat/message
 - Formulates a response based on the dialogue state, and user input
-- ![Image of Project Structure](img/structure.png)
-    1. Classifies user intent (Intent1, Intent2 classes)
-        - Goes through two levels of models to enhance classification accuracy
-    2. Gets dialogue state by extracting entities in the sentence with a NER model. (NERState class)
-    3. Goes through a predefined pipeline based on user intent, current state, and DB query results
-        - Uses handlers defined in response.py
-        - Handlers are defined in actions/
-        - Each handler .py file represents a major intent
-        - Methods defined in handler .py represent a branch based on current state and DB query results.
-    4. Formulates a response, using templates from responses/
-        - Uses .toml file type
-        - defines utter, which are responses the chat system can give back 
-            - There could be multiple sentences in utter, which makes interaction with the chatbot not repetetive, and more human-like
-        - defines sets of variables that are used in utter, which are dynamically inserted in.
-        - (Limitation: doesn't have good templating, so loop-related stuff has to be hardcoded in the handler .py)
+- Below is a Example Dialogue Pipeline (Included two of final intents)
+![Image of Project Structure](img/structure.png)
+
+1. Classifies user intent (Intent1, Intent2 classes)
+    - Goes through two levels of models to enhance classification accuracy
+2. Gets dialogue state by extracting entities in the sentence with a NER model. (NERState class)
+3. Goes through a predefined pipeline based on user intent, current state, and DB query results
+    - Uses handlers defined in response.py
+    - Handlers are defined in actions/
+    - Each handler .py file represents a major intent
+    - Methods defined in handler .py represent a branch based on current state and DB query results.
+4. Formulates a response, using templates from responses/
+    - Uses .toml file type
+    - defines utter, which are responses the chat system can give back 
+        - There could be multiple sentences in utter, which makes interaction with the chatbot not repetetive, and more human-like
+    - defines sets of variables that are used in utter, which are dynamically inserted in.
+    - (Limitation: doesn't have good templating, so loop-related stuff has to be hardcoded in the handler .py)
 
 ## AI Models
 ### Models Used
