@@ -10,6 +10,7 @@
 ## Running the project
 ### Install dependencies
 - First, install all the requirements in requirements.txt (In a preferred environment)
+- Python version >= 3.11
 ```bash
 pip install -r requirements.txt
 ```
