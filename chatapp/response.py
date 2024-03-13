@@ -1,8 +1,4 @@
 # type:ignore
-import json
-
-from .db.vec_db import VecDB
-from .db.map_db import MapDB
 from .intent_models import Intent2
 
 from .actions.course.course_evaluation import course_evaluation_response
@@ -26,13 +22,6 @@ handlers = {
 
 
 class ChatResponse:
-    def __init__(self):
-        with open("./data/raw/department_data.json") as f:
-            department_json = json.load(f)
-
-        self.address_location_dict = {x["부서명"]: x for x in department_json}
-        self.map = MapDB()
-
     def __call__(self, intent2, slot):
         for handler_intent2, func in handlers.items():
             if handler_intent2 == intent2:
