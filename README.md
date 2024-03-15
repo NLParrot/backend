@@ -5,7 +5,11 @@
     - Aims for making a sustainable chatbot that can be run with low computational power.
     - Aims for easily extending user intent, and easy branching of actions corresponding to each intent
 - This repository is for the AI backend of the web application
-- ![Video of demo](url)
+
+
+https://github.com/NLParrot/backend/assets/87269362/93b99a25-3db1-4cf1-a284-c95f7a3846f2
+
+
 
 ## Running the project
 ### Install dependencies
