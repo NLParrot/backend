@@ -76,3 +76,13 @@ flask -A wsgi run
     - Fixed some data from openstreetmap
 
 
+## Intents to be Added
+- Greetings
+- Looking for what chatbot can do
+- Information / Recommendation of restaurants near the school
+- School club information
+
+## Known bugs
+- DB from openstreetmap doesn't align well with kakao map api
+- When searching for a path, doesn't use all the entrances of a building
+
