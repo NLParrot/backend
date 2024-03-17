@@ -1,4 +1,5 @@
 # ALEX Chatbot (A.K.A Albatross school Life EXperience)
+- [Design Document](DESIGNDOC.md)
 - A Chatbot Assistant for Sogang University Freshmen
 - A task oriented dialogue system, aimed to respond to common questions by freshmen
     - Chosen because RAG based chatbots can suffer from hallucinations, with high API costs
