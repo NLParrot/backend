@@ -2,31 +2,35 @@
 ## Overview
 - A Task Oriented Dialogue System Chatbot for Sogang University Freshmen
 
+
 ## Goals
 - Fast, Low cost
     - Used the smallest ai model possible
 - Extensible
+![img](img/demo.png)
 
 ## Structure of Files
 
 ```
 |-- chatapp/
-|   |-- actions/             : contains callback functions that are called for each intent
-|   |-- responses/           : contains .toml that you can use to generate a response
-|   |-- db/                  : contains .py files that you can use to retrieve data from a db
-|   |-- api_server.py        : contains api endpoint. 
-|   |-- intent_models.py     : contains pipeline for finding out intent of user
-|   |-- response.py          : contains pipeline for getting response in respect to the input
-|   |-- state_models.py      : contains pipeline for getting dialogue state of input
-|-- config/                  : contains config files for the server
-|-- data/                    : contains sqlite .db files, and raw data before put into weaviate
-|-- models/                  : contains ai models 
-|-- vector_data/             : contains docker-compose file for weaviate database, and script for inserting data
-|-- logs/                    : contains log file for dialogue
-|-- insert_into_sqlite_db.py : script for importing raw data into sqlite
-|-- wsgi.py                  : base script for flask app
+|   |-- actions/             
+|   |-- responses/           
+|   |-- db/                  
+|   |-- api_server.py        
+|   |-- intent_models.py    
+|   |-- response.py         
+|   |-- state_models.py      
+|-- config/                  
+|-- data/                   
+|-- models/                
+|-- vector_data/          
+|-- logs/                
+|-- insert_into_sqlite_db.py 
+|-- wsgi.py                 
 ```
 
+## Example of processing user input
+![img](img/structure.png)
 ## Pipeline of processing user input
 - One endpoint in api_server.py (/api/chat/message)
 1. Figures out user intent 
