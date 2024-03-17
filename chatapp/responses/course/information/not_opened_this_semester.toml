@@ -1,6 +1,9 @@
 utter = [
     """
-이번 학기에 {professor} 교수님의 {course} 수업에 대한 정보가 없습니다!"""
+이번 학기에 {professor} 교수님의 {course} 수업에 대한 정보가 없습니다!""",
+    """
+다시 한번 확인해 주세요! {professor} 교수님의 {course} 수업이 이번 학기에 안 열리는 것 같습니다!
+"""
 ]
 
 variables = [

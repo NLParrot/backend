@@ -1,4 +1,6 @@
 # type:ignore
+import logging
+
 from .intent_models import Intent2
 
 from .actions.course.course_evaluation import course_evaluation_response
@@ -23,8 +25,12 @@ handlers = {
 
 class ChatResponse:
     def __call__(self, intent2, slot):
-        for handler_intent2, func in handlers.items():
-            if handler_intent2 == intent2:
-                return func(slot)
+        try:
+            for handler_intent2, func in handlers.items():
+                if handler_intent2 == intent2:
+                    return func(slot)
 
-        return "no response made yet"
+            return "no response made yet"
+        except e:
+            logging.error(e)
+            return "Error in handling chat response"

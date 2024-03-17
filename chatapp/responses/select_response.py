@@ -21,4 +21,4 @@ class SelectResponse:
 
         except Exception as e:
             logging.error(e)
-            return "error"
+            return "Error while selecting response"

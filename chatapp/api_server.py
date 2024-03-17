@@ -24,23 +24,16 @@ user_logger.propagate = False
 @chat_blueprint.route("/api/chat/message", methods=["POST"])
 def chat():
     request_json = request.get_json()
-    log.debug(request_json)
 
     user_text = request_json.get("user_text", "")
     cur_intent1 = request_json.get("intent1")
     cur_intent2 = request_json.get("intent2")
     cur_slot = request_json
 
-    if cur_slot["status"] != "need_info":
-        cur_intent1 = intent1(user_text)
-        cur_intent2 = intent2(user_text, cur_intent1)
-        logging.debug(f"intent1={cur_intent1}")
-        logging.debug(f"intent2={cur_intent2}")
-        add_slot = state(user_text, cur_intent1, cur_intent2)
-        cur_slot = cur_slot | add_slot
-    else:
-        cur_slot[cur_slot["info_key"]] = user_text
-        cur_slot["status"] = "normal"
+    cur_intent1 = intent1(user_text)
+    cur_intent2 = intent2(user_text, cur_intent1)
+    add_slot = state(user_text, cur_intent1, cur_intent2)
+    cur_slot = cur_slot | add_slot
 
     response_text = response(cur_intent2, cur_slot)
 

@@ -55,7 +55,6 @@ class MapDB:
 
             # Explore neighbors of the current node
             for neighbor in self.graph.successors(current_node):
-                # Calculate the tentative g score for the neighbor
                 edge_data = self.graph.get_edge_data(current_node, neighbor)
                 for _, data in edge_data.items():
                     tentative_g = g_score[current_node] + data["length"]
