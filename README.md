@@ -28,8 +28,8 @@ docker compose up
 ### Run the server
 - You can use gunicorn or flask dev server to run the application
 ```bash
-gunicorn -w 4 -b 0.0.0.0:5000 wsgi:app
-flask -A wsgi run
+gunicorn -w 4 -b 0.0.0.0:5000 chatapp.wsgi:app
+flask -A chatapp.wsgi run
 ```
 
 ## Structure of the project
