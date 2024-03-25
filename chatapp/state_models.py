@@ -32,13 +32,20 @@ class NERState(StateModels):
 
     # underscored variables are not used in this State Model
     def __call__(self, user_text, _intent1, _intent2) -> dict:
-        slot = {}
-        classified = self.classifier(user_text)
-        for group in classified:
-            slot[group["entity_group"]] = group["word"]
-        logging.debug(f"(state)slot={slot}")
-        return slot
+        try:
+            slot = {}
+            classified = self.classifier(user_text)
+            if classified == None:
+                return slot
 
+            for group in classified:
+                slot[group["entity_group"]] = group["word"]
+
+            logging.debug(f"(state)slot={slot}")
+            return slot
+        except:
+            logging.error(f"error while classifying tokens (NER)")
+            return {}
 
 # A State Management model that uses seq2seq models
 # Currently not used due to low performance

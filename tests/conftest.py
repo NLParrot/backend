@@ -1,5 +1,6 @@
 import pytest
-from chatapp.wsgi import app
+from chatapp.responses.select_response import SelectResponse
+from chatapp.wsgi import app as flask_app
 
 @pytest.fixture()
 def app():
@@ -15,3 +16,10 @@ def client(app):
     return app.test_client()
 
 
+@pytest.fixture()
+def runner(app):
+    return app.test_cli_runner()
+
+@pytest.fixture()
+def select_response():
+    return SelectResponse()
