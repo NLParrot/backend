@@ -2,7 +2,6 @@ from abc import abstractmethod
 import torch
 import logging
 import re
-from chatapp.intent_models import Intent1, Intent2
 from transformers import (
     AutoModelForSeq2SeqLM,
     AutoModelForTokenClassification,
@@ -11,6 +10,7 @@ from transformers import (
 from transformers import TokenClassificationPipeline
 from config import config
 
+from chatapp.intent_models import Intent1, Intent2
 
 class StateModels:
     @abstractmethod
