@@ -23,3 +23,16 @@ def runner(app):
 @pytest.fixture()
 def select_response():
     return SelectResponse()
+
+@pytest.fixture()
+def mock_open_toml(mocker):
+    mock_open = mocker.mock_open(read_data=b"utter=['What are you doing, {name}?']\n variables=['name']")
+    mocker.patch("builtins.open", mock_open)
+    return mock_open
+
+@pytest.fixture()
+def mock_open_toml_novar(mocker):
+    mock_open = mocker.mock_open(read_data=b"utter=['No names required']\n variables=[]")
+    mocker.patch("builtins.open", mock_open)
+    return mock_open
+
