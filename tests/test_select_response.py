@@ -1,4 +1,3 @@
-import pytest
 
 def test_get_response_valid(mock_open_toml, select_response):
     res = select_response.get_response("/some_path", {"name": "John"})
