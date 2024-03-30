@@ -496,3 +496,73 @@ r___컴퓨터공학의 위치/연락처를 찾으시나요? 제가 알려드릴�
   - FAX: 02-704-8273
   - E-Mail: csadmin@sogang.ac.kr
 ___r
+u______u
+i1___small_talk___1i
+i2___call___2i
+s___{'slot': '', 'user_input': '김영건 교수님의 철학 수업이 필요해', 'intent1': 'small_talk', 'intent2': 'call', 'response_text': 'no response made yet'}___s
+r___no response made yet___r
+u______u
+i1___small_talk___1i
+i2___call___2i
+s___{'slot': '', 'user_input': '안녕', 'intent1': 'small_talk', 'intent2': 'call', 'response_text': 'no response made yet'}___s
+r___no response made yet___r
+u______u
+i1___small_talk___1i
+i2___call___2i
+s___{'slot': '', 'user_input': '야', 'intent1': 'small_talk', 'intent2': 'call', 'response_text': 'no response made yet'}___s
+r___no response made yet___r
+u______u
+i1___small_talk___1i
+i2___call___2i
+s___{'slot': '', 'user_input': '하이요', 'intent1': 'small_talk', 'intent2': 'call', 'response_text': 'no response made yet'}___s
+r___no response made yet___r
+u______u
+i1___small_talk___1i
+i2___call___2i
+s___{'slot': '', 'user_input': '하이하이', 'intent1': 'small_talk', 'intent2': 'call', 'response_text': 'no response made yet'}___s
+r___no response made yet___r
+u______u
+i1___small_talk___1i
+i2___call___2i
+s___{'slot': '', 'user_input': '너 뭐야', 'intent1': 'small_talk', 'intent2': 'call', 'response_text': 'no response made yet'}___s
+r___no response made yet___r
+u______u
+i1___small_talk___1i
+i2___call___2i
+s___{'slot': '', 'user_input': '너 뭐 할수 있냐', 'intent1': 'small_talk', 'intent2': 'call', 'response_text': 'no response made yet'}___s
+r___no response made yet___r
+u______u
+i1___small_talk___1i
+i2___call___2i
+s___{'slot': '', 'user_input': 'fa 규칙좀', 'intent1': 'small_talk', 'intent2': 'call', 'response_text': 'no response made yet'}___s
+r___no response made yet___r
+u______u
+i1___small_talk___1i
+i2___call___2i
+s___{'slot': '', 'user_input': 'fa 규칙좀', 'intent1': 'small_talk', 'intent2': 'call', 'response_text': 'no response made yet'}___s
+r___no response made yet___r
+u______u
+i1___small_talk___1i
+i2___call___2i
+s___{'slot': '', 'user_input': '킹영건의 강의평가', 'intent1': 'small_talk', 'intent2': 'call', 'response_text': 'no response made yet'}___s
+r___no response made yet___r
+u___킹영건의 강의평가___u
+i1___course___1i
+i2___course_evaluation___2i
+s___{'slot': '', 'user_text': '킹영건의 강의평가', 'professor': '킹영건의', 'course_keyword': '강의평가', 'intent1': 'course', 'intent2': 'course_evaluation', 'response_text': '다시 한번 말해주실 수 있나요? 이해하지 못했습니다.'}___s
+r___다시 한번 말해주실 수 있나요? 이해하지 못했습니다.___r
+u___하이___u
+i1___small_talk___1i
+i2___greeting___2i
+s___{'slot': '', 'user_text': '하이', 'intent1': 'small_talk', 'intent2': 'greeting', 'response_text': 'no response made yet'}___s
+r___no response made yet___r
+u___야___u
+i1___small_talk___1i
+i2___call___2i
+s___{'slot': '', 'user_text': '야', 'intent1': 'small_talk', 'intent2': 'call', 'response_text': 'no response made yet'}___s
+r___no response made yet___r
+u___너 뭐 할 수 있냐___u
+i1___small_talk___1i
+i2___help___2i
+s___{'slot': '', 'user_text': '너 뭐 할 수 있냐', 'intent1': 'small_talk', 'intent2': 'help', 'response_text': 'no response made yet'}___s
+r___no response made yet___r

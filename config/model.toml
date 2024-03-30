@@ -3,11 +3,12 @@
 dialogue_log = "./log/dialogue.log"
 
 [model_path]
-intent1 = "./models/intent1_model_1"
-intent2_course = "./models/intent2_course_model_1"
-intent2_map = "./models/intent2_map_model_1"
-intent2_rule = "./models/intent2_rule_model_1"
-intent2_service = "./models/intent2_service_model_1"
+intent1 = "./models/intent1_model"
+intent2_course = "./models/intent2_course_model"
+intent2_map = "./models/intent2_map_model"
+intent2_rule = "./models/intent2_rule_model"
+intent2_service = "./models/intent2_service_model"
+intent2_small_talk = "./models/intent2_small_talk_model"
 ner = "./models/ner_1"
 
 [db_path]

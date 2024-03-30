@@ -1,5 +1,11 @@
 # type:ignore
 import logging
+from chatapp.actions.small_talk.bored import bored_response
+
+from chatapp.actions.small_talk.call import call_response
+from chatapp.actions.small_talk.greeting import greeting_response
+from chatapp.actions.small_talk.help import help_response
+from chatapp.actions.small_talk.thank_you import thank_you_response
 
 from .intent_models import Intent2
 
@@ -13,13 +19,27 @@ from .actions.rule.retake import retake_response
 
 
 handlers = {
+    # course
     Intent2.COURSE_EVALUATION: course_evaluation_response,
     Intent2.COURSE_INFORMATION: course_information_response,
+
+    # map
     Intent2.BUILDING_LOCATION: building_location_response,
     Intent2.PATHFIND: pathfind_response,
+
+    # service
     Intent2.CONTACTS: contacts_response,
-    Intent2.FA_INFORMATION: fa_response,
-    Intent2.RETAKE_INFORMATION: retake_response,
+
+    # rule
+    Intent2.FA_GENERAL: fa_response,
+    Intent2.RETAKE: retake_response,
+
+    # small_talk
+    Intent2.CALL: call_response,
+    Intent2.GREETING: greeting_response,
+    Intent2.HELP: help_response,
+    Intent2.BORED: bored_response,
+    Intent2.THANK_YOU: thank_you_response,
 }
 
 
@@ -30,7 +50,7 @@ class ChatResponse:
                 if handler_intent2 == intent2:
                     return func(slot)
 
-            return "no response made yet"
+            return "지금 하신 이야기에 대한 답변은 준비가 되지 않았습니다."
         except e:
             logging.error(e)
             return "Error in handling chat response"
