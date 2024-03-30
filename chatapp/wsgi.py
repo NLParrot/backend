@@ -5,7 +5,7 @@ from config import Config
 
 
 app = Flask(__name__)
-CORS(app, resources={r"/api/*": {"origins": "http://127.0.0.1:8000"}})
+CORS(app, resources={r"/api/*": {"origins": ["http://127.0.0.1:8000", "http://sogangalex.kro.kr", "http://175.45.200.101"]}})
 
 app.register_blueprint(chat_blueprint)
 
