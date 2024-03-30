@@ -2,5 +2,5 @@
 from chatapp.responses.select_response import SelectResponse
 
 
-def help_response():
-    return SelectResponse().get_response("smalltalk/help")
+def help_response(slot):
+    return SelectResponse().get_response("small_talk/help")

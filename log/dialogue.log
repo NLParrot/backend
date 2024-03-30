@@ -566,3 +566,24 @@ i1___small_talk___1i
 i2___help___2i
 s___{'slot': '', 'user_text': '너 뭐 할 수 있냐', 'intent1': 'small_talk', 'intent2': 'help', 'response_text': 'no response made yet'}___s
 r___no response made yet___r
+u___너 뭐 할 수 있냐___u
+i1___small_talk___1i
+i2___help___2i
+s___{'slot': '', 'user_text': '너 뭐 할 수 있냐', 'intent1': 'small_talk', 'intent2': 'help', 'response_text': 'Error while selecting response'}___s
+r___Error while selecting response___r
+u___너 뭐 할 수 있냐___u
+i1___small_talk___1i
+i2___help___2i
+s___{'slot': '', 'user_text': '너 뭐 할 수 있냐', 'intent1': 'small_talk', 'intent2': 'help', 'response_text': 'Error while selecting response'}___s
+r___Error while selecting response___r
+u___너 뭐 할 수 있냐___u
+i1___small_talk___1i
+i2___help___2i
+s___{'slot': '', 'user_text': '너 뭐 할 수 있냐', 'intent1': 'small_talk', 'intent2': 'help', 'response_text': '저는 다음과 같은 일을 할 수 있습니다.\n1. 수업의 강의평가 확인하기, 수업의 시간/강의실 확인하기\n2. 건물 위치 확인하기\n3. 건물에서 건물으로 가는 길 확인하기\n4. FA 기준 설명, 재수강 기준 설명\n5. 학교 내 기관 연락처 및 위치\n'}___s
+r___저는 다음과 같은 일을 할 수 있습니다.
+1. 수업의 강의평가 확인하기, 수업의 시간/강의실 확인하기
+2. 건물 위치 확인하기
+3. 건물에서 건물으로 가는 길 확인하기
+4. FA 기준 설명, 재수강 기준 설명
+5. 학교 내 기관 연락처 및 위치
+___r

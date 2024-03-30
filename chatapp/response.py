@@ -51,6 +51,6 @@ class ChatResponse:
                     return func(slot)
 
             return "지금 하신 이야기에 대한 답변은 준비가 되지 않았습니다."
-        except e:
+        except Exception as e:
             logging.error(e)
             return "Error in handling chat response"
